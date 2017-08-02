@@ -188,7 +188,7 @@ print("Store noscript meta data successfully!!!")
 ```
 
 转码后，结果如下(琳琅满目的高清无码大图 URL)：
-![noscript](./introduction/noscript.png)
+![unescape](./introduction/unescape.png)
 
 
 ## 2.6 下载图片
