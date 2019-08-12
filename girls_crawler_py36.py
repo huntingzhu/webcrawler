@@ -27,18 +27,13 @@ def main():
 
 
 
-    # ****************** Scroll to the bottom, and click the "view more" button *********
+    # ****************** Scroll to the bottom, and do it 5 times *********
     def execute_times(times):
 
         for i in range(times):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(2)
-            try:
-                driver.find_element_by_css_selector('button.QuestionMainAction').click()
-                print("page" + str(i))
-                time.sleep(1)
-            except:
-                break
+            
 
     execute_times(5)
 
@@ -50,17 +45,17 @@ def main():
 
     result_bf = result_soup.prettify() # 结构化原 HTML 文件
 
-    with open("./output/rawfile/raw_result.txt", 'w') as girls: # 存储路径里的文件夹需要事先创建。
+    with open("./output/rawfile/raw_result.txt", 'w',encoding='utf-8') as girls: # 存储路径里的文件夹需要事先创建。
         girls.write(result_bf)
     girls.close()
     print("Store raw data successfully!!!")
 
     # ****************   Find all <nonscript> nodes and store them   *****************************************
-    with open("./output/rawfile/noscript_meta.txt", 'w') as noscript_meta:
+    with open("./output/rawfile/noscript_meta.txt", 'w',encoding='utf-8') as noscript_meta:
         noscript_nodes = result_soup.find_all('noscript') # 找到所有<noscript>node
         noscript_inner_all = ""
         for noscript in noscript_nodes:
-            noscript_inner = noscript.get_text() # 获取<noscript>node内部内容
+            noscript_inner = str(noscript)# 获取<noscript>node内部内容
             noscript_inner_all += noscript_inner + "\n"
 
         noscript_all = html.parser.unescape(noscript_inner_all) #  将内部内容转码并存储
@@ -72,7 +67,7 @@ def main():
     # ****************   Store meta data of imgs  *****************************************
     img_soup = BeautifulSoup(noscript_all, 'html.parser')
     img_nodes = img_soup.find_all('img')
-    with open("./output/rawfile/img_meta.txt", 'w') as img_meta:
+    with open("./output/rawfile/img_meta.txt", 'w',encoding='utf-8') as img_meta:
         count = 0
         for img in img_nodes:
             if img.get('src') is not None:
